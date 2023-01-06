@@ -14,7 +14,6 @@ const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&coun
 // Check if all images are loaded
 function imageLoaded() {
 	imagesLoaded++;
-	console.log(imagesLoaded);
 	if (imagesLoaded === totalImages) {
 		ready = true;
 		loader.hidden = true;
