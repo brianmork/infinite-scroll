@@ -5,11 +5,17 @@ let ready = false;
 let imagesLoaded = 0;
 let totalImages = 0;
 let photosArray = [];
+let initialLoad = true;
 
 // Unsplash API
-const count = 30;
+let imageCount = 30;
 const apiKey = '3MTe6FDy4oYTMBahvI4Y_GLbwY9g_8boyOvikcm6Mjc';
-const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`;
+let apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${imageCount}`;
+
+
+function updateAPIWithNewCount (picCount) {
+	apiUrl = `https://api.unsplash.com/photos/random?client_id=${apiKey}&count=${picCount}`;
+}
 
 // Check if all images are loaded
 function imageLoaded() {
@@ -51,7 +57,7 @@ function setAttributes(element, attributes) {
 		// Add image to a into container
 		item.appendChild(img);
 		imageContainer.appendChild(item);
-	});
+	})
 }
 
 // Get photos from Unsplash API
@@ -60,6 +66,10 @@ async function getPhotos() {
 		const response = await fetch(apiUrl);
 		photosArray = await response.json();
 		displayPhotos();
+		if (initialLoad) {
+			updateAPIWithNewCount(30);
+			initialLoad = false;
+		}
 	} catch (error) {
 		// Catch error here
 	}
